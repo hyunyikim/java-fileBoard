@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class BoardDto {
 
-	private String seq;
+	private int seq;
 	private String title;
 	private String writer;
 	private String regdate;
@@ -13,10 +13,10 @@ public class BoardDto {
 	private int re_lev;
 	private int re_seq;*/
 	
-	public String getSeq() {
+	public int getSeq() {
 		return seq;
 	}
-	public void setSeq(String seq) {
+	public void setSeq(int seq) {
 		this.seq = seq;
 	}
 	public String getTitle() {
@@ -31,6 +31,7 @@ public class BoardDto {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
+	
 	public String getRegdate() {
 		return regdate;
 	}
@@ -42,6 +43,16 @@ public class BoardDto {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	@Override
+	public String toString() {
+		return "BoardDto [seq=" + seq + ", title=" + title + ", writer=" + writer + ", regdate=" + regdate
+				+ ", content=" + content + "]";
+	}
+	
+	public String toTxt() {
+		return "\r\n" + seq + "\t" + title + "\t" + writer + "\t" + regdate + "\t" + content;
 	}
 	
 	

@@ -38,6 +38,12 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<button type="button" class="btn btn-default" id="boardWriteBtn">새글 작성</button>
 	</div>
+	<script>
+		$('#boardWriteBtn').click(function(){
+			location.href = "boardWrite.do";
+		});
+	</script>
 </body>
 </html>

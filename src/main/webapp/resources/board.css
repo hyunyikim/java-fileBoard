@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.boardTable {
+	border-collapse: collapse;
+    width: 100%;
+}
+
+.boardTable tr, td {
+	border: 1px solid #ddd;	
+	padding: 8px;
+}
+
+.boardTable tr td:nth-child(1) {
+	background: #ddd;
+	text-align: center;
+}
+
+.boardTable tr:nth-child(3) {
+	height: 250px;
+}
+
+.boardTable tr:nth-child(3) td textarea {
+	height: 250px;
+}
