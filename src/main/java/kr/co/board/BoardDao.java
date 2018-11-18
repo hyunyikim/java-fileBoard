@@ -2,6 +2,7 @@ package kr.co.board;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,45 +18,59 @@ import java.util.TreeMap;
 
 public class BoardDao {
 	
-	private String fileName = "C:\\Users\\Hyunyi\\boardData.txt" ;
 	private static HashMap<Integer, BoardDto> boardMap = new HashMap<Integer, BoardDto>();
 	
 	BufferedWriter fw = null;
 	BufferedReader fr = null;
 	
+	String filePath = System.getProperty("user.home");
+	String fileName = filePath + File.separator + "boardData.txt";
+	
+	
 	// boardMap을 초기화하고 파일 데이터를 읽어와 boardMap에 넣어주는 메서드   
-	public void setBoardMap() {
-        try {
-        	boardMap.clear();
-            fr = new BufferedReader(new FileReader(fileName));
-            String row = "";
-            while((row = fr.readLine()) != null) {
-            	// System.out.println("txt 가 null이 아니다"); 처음에 아무 데이터도 없을 때 해결  
-            	
-            	BoardDto dto = new BoardDto();
-            	String[] rowArr = row.split("\t");
-            	
-            	String str = rowArr[0].toString();
-            	int seq = 0;
-            	
-            	if(!isNumber(str)) {
-            		seq = (int)str.charAt(1) - 48;
-            	} else {
-            		seq = Integer.parseInt(rowArr[0]);
-            	}
-            	dto.setSeq(seq);
-            	dto.setTitle(rowArr[1]);
-            	dto.setWriter(rowArr[2]);
-            	dto.setRegdate(rowArr[3]);
-            	dto.setContent(rowArr[4]);
-            	boardMap.put(seq, dto);
-            }
-            fr.close();
-		} catch(FileNotFoundException fe) {
-			fe.printStackTrace();
-		} catch(IOException ie) {
-			ie.printStackTrace();
-		}
+	public void setBoardMap() {	
+		boardMap.clear();
+    	File file = new File(fileName);
+    	if(file.exists()) {
+    		try {
+                fr = new BufferedReader(new FileReader(fileName));
+                String row = "";
+                while((row = fr.readLine()) != null) {
+                	BoardDto dto = new BoardDto();
+                	String[] rowArr = row.split("\t");
+                	
+                	String str = rowArr[0].toString();
+                	int seq = 0;
+                	
+                	if(!isNumber(str)) {
+                		seq = (int)str.charAt(1) - 48;
+                	} else {
+                		seq = Integer.parseInt(rowArr[0]);
+                	}
+                	dto.setSeq(seq);
+                	dto.setTitle(rowArr[1]);
+                	dto.setWriter(rowArr[2]);
+                	dto.setRegdate(rowArr[3]);
+                	dto.setContent(rowArr[4]);
+                	boardMap.put(seq, dto);
+                }
+                fr.close();
+    		} catch(FileNotFoundException fe) {
+    			fe.printStackTrace();
+    		} catch(IOException ie) {
+    			ie.printStackTrace();
+    		}
+    	} else {
+    		try {
+                fw = new BufferedWriter(new FileWriter(fileName));
+                fw.write("");
+                fw.close();
+    		} catch(FileNotFoundException fe) {
+    			fe.printStackTrace();
+    		} catch(IOException ie) {
+    			ie.printStackTrace();
+    		}
+    	}
 	}
 	
 	// 숫자 체크 메서드 

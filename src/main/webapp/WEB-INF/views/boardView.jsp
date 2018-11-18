@@ -14,14 +14,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<title>게시판_지원자 김현이</title>
 </head>
 <body>
 <div class="container">
 		<h2 class="boardTitle">글 상세보기</h2>
 		<table class="boardTable">
 			<tr>
-				<td>글제목</td>
+				<td class="boardTd">글제목</td>
 				<td>${dto.title}</td>
 			</tr>
 			<tr>

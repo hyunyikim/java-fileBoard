@@ -21,7 +21,7 @@
 		<form action="boardUpdate.do" method="post">
 			<table class="boardTable">
 				<tr>
-					<td>글제목</td>
+					<td class="boardTd">글제목</td>
 					<td><input type="text" class="form-control" name="title" value="${dto.title}"></td>
 				</tr>
 				<tr>

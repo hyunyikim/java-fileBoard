@@ -2,6 +2,7 @@ package kr.co.board;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class BoardController {
 	private BoardDao dao; 
 	
 	@RequestMapping(value="/index.do")
-	public String index(Model model) throws FileNotFoundException {
+	public String index(Model model) throws FileNotFoundException, IOException {
 		dao.setBoardMap();
 		List<BoardDto> boardList = dao.boardList();
 		model.addAttribute("boardList", boardList);

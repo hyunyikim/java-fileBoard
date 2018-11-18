@@ -34,3 +34,7 @@
 	margin-right: 5px;
 	text-align: right;
 }
+
+.boardTd {
+	width: 300px;
+}
