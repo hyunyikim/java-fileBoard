@@ -20,15 +20,17 @@ public class BoardDao {
 	private String fileName = "C:\\Users\\Hyunyi\\boardData.txt" ;
 	private static HashMap<Integer, BoardDto> boardMap = new HashMap<Integer, BoardDto>();
 	
-	// 처음 boardList를 로드하면 static hashmap 에도 값을 넣어준다. 
-	// 값을 뿌려줄 때는 TreeMap을 이용해 key 값으로 값을 내림차순으로 정렬한 후 dto list에 담는다. 
+	BufferedWriter fw = null;
+	BufferedReader fr = null;
 	
+	// boardMap을 초기화하고 파일 데이터를 읽어와 boardMap에 넣어주는 메서드   
 	public void setBoardMap() {
         try {
         	boardMap.clear();
-            BufferedReader fr = new BufferedReader(new FileReader(fileName));
+            fr = new BufferedReader(new FileReader(fileName));
             String row = "";
             while((row = fr.readLine()) != null) {
+            	// System.out.println("txt 가 null이 아니다"); 처음에 아무 데이터도 없을 때 해결  
             	
             	BoardDto dto = new BoardDto();
             	String[] rowArr = row.split("\t");
@@ -56,7 +58,7 @@ public class BoardDao {
 		}
 	}
 	
-	
+	// 숫자 체크 메서드 
 	public boolean isNumber(String str) {
 		try {
 			Integer.parseInt(str);
@@ -66,33 +68,33 @@ public class BoardDao {
 		}
 	}
 	
-	
+	// map에 담긴 리스트를 역순으로 정렬하는 메서드 
 	public List<BoardDto> boardList() {
 		List<BoardDto> boardList = new ArrayList<BoardDto>();
 		TreeMap<Integer, BoardDto> treeMap = new TreeMap<Integer, BoardDto>(Collections.reverseOrder());
 		treeMap.putAll(boardMap);
-		Iterator<Integer> iteratorKey = treeMap.keySet().iterator();
-		while(iteratorKey.hasNext()) {
-			int key = iteratorKey.next();
+		Iterator<Integer> mapKey = treeMap.keySet().iterator();
+		while(mapKey.hasNext()) {
+			int key = mapKey.next();
 			boardList.add(boardMap.get(key));
 		}
 		return boardList;
 	}
 	
-	
+	// 글 상세보기 메서드 
 	public BoardDto boardView(int seq) {
 		BoardDto dto = new BoardDto();
 		dto = boardMap.get(seq);
 		return dto;
 	}
 
-
+	// 글쓰기 메서드 
 	public void boardWrite(BoardDto dto) {
 		TreeMap<Integer, BoardDto> treeMap = new TreeMap<Integer, BoardDto>(boardMap);
-		Iterator<Integer> iteratorKey = treeMap.keySet().iterator();
+		Iterator<Integer> mapKey = treeMap.keySet().iterator();
 		int key = 0;
-		while(iteratorKey.hasNext()) {
-			key = iteratorKey.next();
+		while(mapKey.hasNext()) {
+			key = mapKey.next();
 		}
 		dto.setSeq(key + 1);
 		Date today = new Date();
@@ -101,7 +103,7 @@ public class BoardDao {
 		
 		String txt = dto.toTxt();
         try {
-            BufferedWriter fw = new BufferedWriter(new FileWriter(fileName, true));
+            fw = new BufferedWriter(new FileWriter(fileName, true));
             fw.write(txt);
             fw.close();
 		} catch(FileNotFoundException fe) {
@@ -111,5 +113,46 @@ public class BoardDao {
 		}
 	}
 	
+	// 글 수정 view 메서드 
+	public BoardDto boardUpdateView(int seq) {
+		BoardDto dto = new BoardDto();
+		dto = boardMap.get(seq);
+		return dto;
+	}
 	
+	// 글 수정 메서드
+	public void boardUpdate(BoardDto dto) {
+		boardMap.remove(dto.getSeq());
+		
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dto.setRegdate(sdf.format(today));
+		
+		boardMap.put(dto.getSeq(), dto);
+		mapToFileData();
+	}
+	
+	// 글 삭제 메서드
+	public void boardDelete(int seq) {
+		boardMap.remove(seq);
+		mapToFileData();
+	}
+	
+	// map을 파일 데이터에 덮어쓰는 메서드
+	public void mapToFileData() {
+		try {
+			fw = new BufferedWriter(new FileWriter(fileName));
+			Iterator<Integer> mapKey = boardMap.keySet().iterator();
+			String txt = "";
+			while(mapKey.hasNext()) {
+				txt += boardMap.get(mapKey.next()).toTxt();
+			}
+			fw.write(txt);
+			fw.close();
+		} catch(FileNotFoundException fe) {
+			fe.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -17,25 +17,26 @@
 </head>
 <body>
 <div class="container">
-		<h2 class="boardTitle">글 작성</h2>
-		<form action="boardWrite.do" method="post">
+		<h2 class="boardTitle">글 수정하기</h2>
+		<form action="boardUpdate.do" method="post">
 			<table class="boardTable">
 				<tr>
 					<td>글제목</td>
-					<td><input type="text" class="form-control" name="title"></td>
+					<td><input type="text" class="form-control" name="title" value="${dto.title}"></td>
 				</tr>
 				<tr>
 					<td>작성자</td>
-					<td><input type="text" class="form-control" name="writer"></td>
+					<td><input type="text" class="form-control" name="writer" value="${dto.writer}"></td>
 				</tr>
 				<tr>
 					<td>글내용</td>
-					<td><textarea class="form-control" name="content"></textarea></td>
+					<td><textarea class="form-control" name="content">${dto.content}</textarea></td>
 				</tr>
 			</table>
+			<input type="hidden" name="seq" value="${dto.seq}">
 			<div class="btnDiv">
 				<button type="button" class="btn btn-default" id="boardListBtn">목록 보기</button>
-				<button type="submit" class="btn btn-default" id="boardWriteSubmitBtn">글 작성</button>
+				<button type="submit" class="btn btn-default">글 수정</button>
 			</div>
 		</form>
 	</div>

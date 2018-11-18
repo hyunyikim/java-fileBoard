@@ -4,11 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>게시판_지원자 김현이</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>게시판_지원자 김현이</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="${pageContext.request.contextPath}/resources/board.css"
+	rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -16,8 +18,7 @@
 </head>
 <body>
 	<div class="container">
-		<h2>Hover Rows 컨트롤러를 타고 들어왔다.</h2>
-		<p>The .table-hover class enables a hover state on table rows:</p>
+		<h2 class="boardTitle">게시판</h2>
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -38,7 +39,9 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<button type="button" class="btn btn-default" id="boardWriteBtn">새글 작성</button>
+		<div class="btnDiv">
+			<button type="button" class="btn btn-default" id="boardWriteBtn">새글 작성</button>
+		</div>
 	</div>
 	<script>
 		$('#boardWriteBtn').click(function(){

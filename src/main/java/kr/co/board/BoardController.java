@@ -1,6 +1,7 @@
 package kr.co.board;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/boardView.do")
-	public String boardView(Model model, int seq) throws FileNotFoundException {
+	public String boardView(Model model, int seq) {
 		BoardDto dto = dao.boardView(seq);
 		model.addAttribute("dto", dao.boardView(seq));
 		return "boardView";
@@ -36,11 +37,27 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/boardWrite.do", method=RequestMethod.POST)
-	public String boardWrite(BoardDto dto) {
+	public String boardWrite(BoardDto dto) throws FileNotFoundException {
 		dao.boardWrite(dto);
-		dao.setBoardMap();
 		return "redirect:/index.do";
 	}
 	
+	@RequestMapping(value="/boardUpdate.do", method=RequestMethod.GET)
+	public String boardUpdateView(Model model, int seq) {
+		BoardDto dto = dao.boardUpdateView(seq);
+		model.addAttribute("dto", dto);
+		return "boardUpdate";
+	}
 	
+	@RequestMapping(value="/boardUpdate.do", method=RequestMethod.POST)
+	public String boardUpdate(BoardDto dto) throws FileNotFoundException {
+		dao.boardUpdate(dto);
+		return "redirect:/index.do";
+	}
+	
+	@RequestMapping(value="/boardDelete.do")
+	public String boardDelete(int seq) throws FileNotFoundException {
+		dao.boardDelete(seq);
+		return "redirect:/index.do";
+	}
 }

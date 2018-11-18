@@ -51,8 +51,9 @@ public class BoardDto {
 				+ ", content=" + content + "]";
 	}
 	
+	// 형식에 맞게 row 구성하는 메서드 
 	public String toTxt() {
-		return "\r\n" + seq + "\t" + title + "\t" + writer + "\t" + regdate + "\t" + content;
+		return seq + "\t" + title + "\t" + writer + "\t" + regdate + "\t" + content + "\r\n";
 	}
 	
 	
