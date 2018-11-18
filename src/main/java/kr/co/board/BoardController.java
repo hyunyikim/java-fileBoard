@@ -23,8 +23,6 @@ public class BoardController {
 		return "index";
 	}
 	
-	
-	
 	@RequestMapping(value="/boardView.do")
 	public String boardView(Model model, int seq) throws FileNotFoundException {
 		BoardDto dto = dao.boardView(seq);
@@ -39,9 +37,8 @@ public class BoardController {
 	
 	@RequestMapping(value="/boardWrite.do", method=RequestMethod.POST)
 	public String boardWrite(BoardDto dto) {
-		System.out.println("boardWrite 컨트롤러 입성");
-		System.out.println("controller에서 찍어본 타이틀 : " + dto.getTitle());
 		dao.boardWrite(dto);
+		dao.setBoardMap();
 		return "redirect:/index.do";
 	}
 	
